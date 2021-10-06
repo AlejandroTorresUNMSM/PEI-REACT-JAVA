@@ -1,0 +1,55 @@
+{
+  "name": "bf-tennis-pei",
+  "version": "1.0.0",
+  "description": "pei full stack react java",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-cli serve --mode development",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://tfs-ms.baufest.com/tfs/Baufest/PEI%20REACT%202021/_git/Grupo24"
+  },
+  "prettier": {
+    "semi": true,
+    "tabWidth": 2,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "printWidth": 100
+  },
+  "keywords": [
+    "react",
+    "java",
+    "baufest",
+    "tennis",
+    "pei"
+  ],
+  "author": "Alejandro Torres",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^5.1.2",
+    "react": "^17.0.2",
+    "react-bootstrap": "^1.6.4",
+    "react-dom": "^17.0.2",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.3.0",
+    "styled-components": "^5.3.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-react": "^7.14.5",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "css-loader": "^6.3.0",
+    "html-loader": "^2.1.2",
+    "html-webpack-plugin": "^5.3.2",
+    "prettier": "^2.4.1",
+    "style-loader": "^3.3.0",
+    "webpack": "^5.56.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.3.1"
+  }
+}
