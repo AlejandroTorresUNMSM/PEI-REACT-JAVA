@@ -1,16 +1,22 @@
-import React from "react";
-import {Col,Container,Row} from 'react-bootstrap';
+import React from 'react';
+import {Col, Container, Row} from 'react-bootstrap';
 import Menu from "../Menu/Menu";
-const Wrapper = (props)=>{
-    return(
-    <div>
-        <Menu/>
-        <Container>
-            <Row>
-                <Col>{props.children}</Col>
-            </Row>
-        </Container>
-    </div>);
+
+const Wrapper = (props) => {
+    const { children } = props;
+    return (
+        <>
+            <Menu/>
+            <Container>
+                <Row>
+                    <Col>
+                        {children}
+                    </Col>
+                </Row>
+            </Container>
+        </>
+    );
 }
 
 export default Wrapper;
+

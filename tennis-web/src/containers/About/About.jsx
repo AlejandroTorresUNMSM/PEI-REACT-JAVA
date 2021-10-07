@@ -1,11 +1,12 @@
 import React from "react";
 import Typography from "../../components/Typography/Typography";
-const About= ()=>{
+
+const About = () => {
     return(
-    <>
-        <Typography>About</Typography>
-    </>);
-    
+        <>
+            <Typography id={"title-id"}>About</Typography>
+        </>
+    )
 }
 
 export default About;
