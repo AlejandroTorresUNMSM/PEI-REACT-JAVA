@@ -1,24 +1,20 @@
 {
-  "name": "bf-pei-react-java-baufest-tennis",
+  "name": "bf-tennis-pei",
   "version": "1.0.0",
-  "description": "PEI - Baufest Tennis",
+  "description": "pei full stack react java",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-cli serve --mode development",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm-run-all -l -c -s webpack:dev",
     "build": "webpack --mode production",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:mock": "npm-run-all -l -c -p server:mock webpack:dev",
+    "server:mock": "nodemon ./server/server.js",
+    "webpack:dev": "webpack-cli serve --mode development"
   },
   "repository": {
     "type": "git",
     "url": "http://tfs-ms.baufest.com/tfs/Baufest/PEI%20REACT%202021/_git/Grupo24"
   },
-  "keywords": [
-    "Baufest",
-    "PEI",
-    "React"
-  ],
-  "author": "Alejandro Torres  - alejandro.torres@unmsm.edu.pe",
-  "license": "MIT",
   "prettier": {
     "semi": true,
     "tabWidth": 2,
@@ -26,28 +22,47 @@
     "singleQuote": true,
     "printWidth": 100
   },
+  "keywords": [
+    "react",
+    "java",
+    "baufest",
+    "tennis",
+    "pei"
+  ],
+  "author": "Alejandro Torres",
+  "license": "MIT",
   "dependencies": {
-    "bootstrap": "^4.6.0",
+    "@babel/runtime": "^7.15.4",
+    "axios": "^0.22.0",
+    "bootstrap": "^5.1.2",
+    "nodemon": "^2.0.13",
+    "npm-run-all": "^4.1.5",
     "react": "^17.0.2",
-    "react-bootstrap": "^1.5.2",
+    "react-bootstrap": "^1.6.4",
     "react-dom": "^17.0.2",
-    "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0",
-    "styled-components": "^5.2.3"
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.3.0",
+    "styled-components": "^5.3.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.0",
-    "@babel/preset-env": "^7.14.0",
-    "@babel/preset-react": "^7.13.13",
+    "@babel/core": "^7.15.5",
+    "@babel/plugin-transform-runtime": "^7.15.8",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-react": "^7.14.5",
     "babel-loader": "^8.2.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "css-loader": "^5.2.4",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "css-loader": "^6.3.0",
+    "express": "^4.17.1",
     "html-loader": "^2.1.2",
-    "html-webpack-plugin": "^5.3.1",
-    "prettier": "^2.2.1",
-    "style-loader": "^2.0.0",
-    "webpack": "^5.36.2",
-    "webpack-cli": "^4.6.0",
-    "webpack-dev-server": "^3.11.2"
+    "html-webpack-plugin": "^5.3.2",
+    "prettier": "^2.4.1",
+    "style-loader": "^3.3.0",
+    "webpack": "^5.56.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.3.1"
   }
 }

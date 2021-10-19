@@ -1,8 +1,10 @@
 import React from "react";
-import { Title } from './styles';
+import {Title} from "./style";
 
-const Typography = (props) => {
-    return <Title id={props.id}>{props.children}</Title>;
+const Typography = (props) =>{
+    var autor = props.text;
+    //return <Title>El autor es {autor}</Title>
+    return <Title>{props.children}</Title>
 }
 
 export default Typography;

@@ -1,24 +1,47 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from "react"; 
+//cuando se importa sin llaves se trae el default , pero tambien puede traer el componente de clase
+import  ReactDOM from "react-dom"; //export 
+import MyApp from "./components/App";
+import About from "./components/About/About";
+import './assets/css/app.css';
 
-// Componente funcional
-/*const App = () => <p>Hello world functional component</p>
-ReactDOM.render(App(), document.getElementById('app'));*/
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-// Class component
-/*class App extends React.Component{
-    render() {
-        return(
-            <p>Hello world class component</p>
-        )
+
+//COMPONENTE FUNCIONAL
+/*
+const myApp = () =>  <p>Componente Funcional </p>
+
+function functionMyApp(){
+    return <p>Componente funcional</p>
+}
+//componente funcional
+//ReactDOM.render(myApp(),document.getElementById("app"));
+
+*/
+
+//COMPONENTE CLASE
+/*
+class App extends React.Component{
+    render(){
+        return(<p>Componente clase</p>)
     }
 }
 
-ReactDOM.render(<App/>, document.getElementById('app'));*/
+//componente de clase
+ReactDOM.render(<App/>,document.getElementById("app"));
 
-// Componetizacion del componente App
-import App from './components/App';
-import './assets/css/app.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+*/
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+//renderizado de componente 
+ReactDOM.render(<MyApp/>,document.getElementById("app"));
+
+
+//ReactDOM.render(<About/>,document.getElementById("app"));
+
+
+
+
+
+
+

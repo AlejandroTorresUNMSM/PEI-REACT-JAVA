@@ -21,7 +21,7 @@ const TableBody = (data) => {
               state: { partido: itemRow },
             }}
           >
-            <Button variant="success">Jugar Partido</Button>
+            <Button variant="success" onClick={() => data.iniciarPartido(itemRow.id)}>{itemRow.estado === 'FINALIZADO' ? 'Ver' : 'Jugar Partido'}</Button>
           </Link>
         </td>
       </tr>

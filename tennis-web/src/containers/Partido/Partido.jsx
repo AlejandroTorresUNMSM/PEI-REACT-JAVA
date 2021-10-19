@@ -1,63 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import Typography from '../../components/Typography/Typography';
 import TablePartido from '../../components/Tables/TablePartido';
-import PartidoModal from '../../components/Modals/PartidoModal';
+import PartidoModal from '../../components/Modal/PartidoModal';
 import { Button } from 'react-bootstrap';
-
-let partidosListMock = [
-  {
-    id: 1,
-    fechaComienzo: '30/06/2021 16:00',
-    estado: 'NO_INICIADO',
-    jugadorLocal: {
-      id: 1,
-      nombre: 'pepe',
-      puntos: 1000,
-    },
-    jugadorVisitante: {
-      id: 2,
-      nombre: 'jose',
-      puntos: 100,
-    },
-  },
-  {
-    id: 2,
-    fechaComienzo: '29/06/2021 16:00',
-    estado: 'NO_INICIADO',
-    jugadorLocal: {
-      id: 3,
-      nombre: 'saul',
-      puntos: 50,
-    },
-    jugadorVisitante: {
-      id: 4,
-      nombre: 'anibal',
-      puntos: 50,
-    },
-  },
-];
+import httpClient from '../../lib/httpClient';
 
 const partidoInit = {
   fechaComienzo: '',
   estado: 'NO_INICIADO',
   jugadorLocal: {
     id: -1,
-    nombre: '',
-    puntos: 0,
   },
   jugadorVisitante: {
     id: -1,
-    nombre: '',
-    puntos: 0,
   },
 };
 
-let jugadoresListMock = [
-  { id: 1, nombre: 'pepe', puntos: 1000 },
-  { id: 2, nombre: 'jose', puntos: 100 },
-  { id: 3, nombre: 'saul', puntos: 50 },
-  { id: 4, nombre: 'anibal', puntos: 50 },
-];
+const dateOptions = {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  hour12: false,
+};
+
 
 const Partido = () => {
   const [partidosList, setPartidosList] = useState([]);
@@ -68,12 +35,86 @@ const Partido = () => {
   const [openModal, setOpenModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  useEffect(() => {
-    getPartidos();
-    getJugadores();
+  useEffect(async () => {
+    await getPartidos();
+    await getJugadores();
   }, []);
 
   // Functions
+
+  //Verbos
+
+  const getPartidos = async () => {
+    try {
+      const data = await httpClient.get('/partidos');
+      console.log('/partidos',data);
+      data.map((partido) => {
+        partido.fechaComienzo = new Date (partido.fechaComienzo).toLocaleDateString('es-AR', dateOptions);
+        return partido;
+      });
+      setPartidosList(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getJugadores = async () => {
+    try {
+      const data = await httpClient.get('/jugadores');
+      setListaJugadores(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const agregarPartido = async () => {
+    try {
+      const dataSend = {... partidoData};
+      dataSend.fechaComienzo = stringToDate(dataSend.fechaComienzo);
+      const data = await httpClient.post('/partidos', { data: dataSend });
+      data.fechaComienzo = new Date (data.fechaComienzo).toLocaleDateString('es-AR', dateOptions);
+      setPartidosList([...partidosList, data]);
+    } catch (error) {
+      console.log(error);
+    }
+    handleCloseModal();
+  };
+
+  const editarPartido = async (id) => {
+    try {
+      const dataSend = {...partidoData};
+      dataSend.fechaComienzo = stringToDate(dataSend.fechaComienzo);
+      const data = await httpClient.put(`/partidos/${id}`, { data: dataSend });
+      data.fechaComienzo = new Date (data.fechaComienzo).toLocaleDateString('es-AR', dateOptions);
+      setPartidosList(partidosList.map((item) => (item.id === id ? data : item)));
+    } catch (error) {
+      console.log(error);
+    }
+    handleCloseModal();
+  };
+
+  const borrarPartido = async (id) => {
+    try {
+      await httpClient.delete(`/partidos/${id}`, { data: partidoData });
+      setPartidosList(partidosList.filter((item) => item.id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const iniciarPartido = async(id) => {
+    const partido = partidosList.filter(element => element.id === id);
+    if(partido[0].estado === 'NO_INICIADO'){
+      try{
+        await httpClient.put(`/partidos/${id}/actions/init`);
+      }
+      catch(error){
+        console.log(error);
+      }
+    } 
+  }
+
+
   //Usar esta funcion para convertir el string 'fechaComienzo' a Date
   const stringToDate = (dateString) => {
     try {
@@ -119,10 +160,10 @@ const Partido = () => {
     handleOpenModal(true, editData);
   };
 
-  const handleDeletePartido = (id, event) => {
+  const handleDeletePartido = async (id, event) => {
     event.preventDefault();
     if (window.confirm('Estas seguro?')) {
-      setPartidosList(partidosList.filter((item) => item.id !== id));
+      await borrarPartido(id);
     }
   };
 
@@ -177,53 +218,17 @@ const Partido = () => {
     if (form.checkValidity()) isEdit ? editarPartido(partidoData.id) : agregarPartido();
   };
 
-  // API
-  const agregarPartido = () => {
-    console.log(partidoData);
-    let model = {
-      ...partidoData,
-      id: partidosListMock.length + 1,
-      jugadorLocal: {
-        ...partidoData.jugadorLocal,
-        nombre: jugadoresListMock.filter((x) => x.id === partidoData.jugadorLocal.id)[0].nombre,
-      },
-      jugadorVisitante: {
-        ...partidoData.jugadorVisitante,
-        nombre: jugadoresListMock.filter((x) => x.id === partidoData.jugadorVisitante.id)[0].nombre,
-      },
-    };
-
-    partidosListMock.push(model);
-    setPartidosList(partidosListMock);
-    handleCloseModal();
-  };
-
-  const editarPartido = (id) => {
-    // Mapea la lista, y verifica por el ID si devuelve el objeto original o el objeto editado
-    partidosListMock = partidosListMock.map((item) => (item.id === id ? partidoData : item));
-    setPartidosList(partidosListMock);
-
-    handleCloseModal();
-  };
-
-  const getPartidos = () => {
-    setPartidosList(partidosListMock);
-  };
-
-  const getJugadores = () => {
-    setListaJugadores(jugadoresListMock);
-  };
-
   return (
     <>
       <Typography id={'title-id'}>Partido</Typography>
       <div className='mb-2'>
-        <Button variant="success" onClick={() => handleOpenModal()}>Agregar partido</Button>
+        <Button variant='success' onClick={() => handleOpenModal()}>Agregar partido</Button>
       </div>
       <TablePartido
         dataForTable={partidosList}
         editPartido={handleEditPartido}
         deletePartido={(id, event) => handleDeletePartido(id, event)}
+        iniciarPartido={iniciarPartido}
       />
       <PartidoModal
         show={openModal}

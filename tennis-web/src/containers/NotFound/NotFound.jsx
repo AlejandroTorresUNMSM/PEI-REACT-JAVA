@@ -1,12 +1,11 @@
 import React from "react";
 import Typography from "../../components/Typography/Typography";
-
-const NotFound = () => {
+const NotFound= ()=>{
     return(
-        <>
-            <Typography id={"title-id"}>Error 404 - Not found</Typography>
-        </>
-    )
+    <>
+        <Typography>NotFound</Typography>
+    </>);
+    
 }
 
 export default NotFound;

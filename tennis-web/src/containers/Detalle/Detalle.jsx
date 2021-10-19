@@ -1,24 +1,27 @@
 import React from "react";
 import Typography from "../../components/Typography/Typography";
-const Detalle= (props)=>{
-    console.log('props:',props);
+import Button from 'react-bootstrap/Button';
+import Tables from '../../components/Tables/Tables';
 
-    const {
-        match: {
-            params: {id}
-        }
-    } = props;
+const Detalle = (props) => {
+  const {match: {params: { id }}} = props;
+  const data = props.location.state.data;
 
 
-    //const id = props.match.params.id;
-    //const {match{params}}  =props;
-    const objeto = {valor:2 , id:{valor:2}};
-    const {valor} = objeto;
+  const dataForTable = {
+    headers:['id', 'Nombre', 'Puntos'],
+    body: [{...data}],
+  }
 
-    return(
-    <Typography>Jugador: {id}</Typography>
-    );
-
+  return (
+      <>
+          <Button onClick={()=> props.history.goBack()} variant="link"> {`<`} Volver</Button>
+          <Typography id={"title-id"}>Jugador: {id}</Typography>
+          <Tables
+              dataForTable={dataForTable}
+          />
+      </>
+  )
 }
 
-export default Detalle;
+export default Detalle
